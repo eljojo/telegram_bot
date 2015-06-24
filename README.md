@@ -61,6 +61,8 @@ sending "José, have no idea what \"heeeeeeeeya!\" means." to @eljojo
 Talk to the [@BotFather](https://telegram.me/botfather).
 You can find more info [here](https://core.telegram.org/bots).
 
+![How to get Token](http://i.imgur.com/90ya4Oe.png)
+
 ## Contributing
 
 1. Fork it ( https://github.com/eljojo/telegram_bot/fork )
