@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = TelegramBot::VERSION
   spec.authors       = ["José Tomás Albornoz"]
   spec.email         = ["jojo@eljojo.net"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{Simple client for Telegram's Bot API}
+  spec.description   = %q{Still in development. Simple client for Telegram's Bot API}
+  spec.homepage      = "https://github.com/eljojo/telegram_bot"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -18,6 +18,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "excon", ">= 0.30.0"
+  spec.add_dependency "virtus", ">= 1.0.0"
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
 end
