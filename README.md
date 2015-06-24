@@ -1,8 +1,8 @@
 # TelegramBot
 
-A charismatic client for [Telegram's Bot API](https://core.telegram.org/bots).
+A charismatic ruby client for [Telegram's Bot API](https://core.telegram.org/bots).
 
-Write your own Telegram Bot!
+Write your own Telegram Bot using Ruby! Yay!
 
 Currently under heavy development.
 Contributions are always welcome.
@@ -19,30 +19,42 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install telegram_bot
-
 ## Usage
 
 Here's an example:
 
 ```ruby
 require 'telegram_bot'
-require 'pp'
 
 bot = TelegramBot.new('[YOUR TELEGRAM BOT TOKEN GOES HERE]')
 bot.get_updates do |message|
-  pp(message)
+  puts "@#{message.from.username}: #{message.text}"
   command = message.get_command_for(bot)
 
   message.reply do |reply|
-    reply.text = "i think that #{command.inspect} is false"
-    pp(reply)
+    case command
+    when /greet/i
+      reply.text = "Hello, #{message.from.first_name}!"
+    else
+      reply.text = "#{message.from.first_name}, have no idea what #{command.inspect} means."
+    end
+    puts "sending #{reply.text.inspect} to @#{message.from.username}"
     reply.send_with(bot)
   end
 end
 ```
+
+Here's a sample output:
+
+```
+$ bundle exec ruby bot.rb
+@eljojo: greet
+sending "Hello, José!" to @eljojo
+@eljojo: heeeeeeeeya!
+sending "José, have no idea what \"heeeeeeeeya!\" means." to @eljojo
+```
+
+![Example](http://i.imgur.com/VF8X4CQ.png)
 
 ## How do I get a Bot Token
 
