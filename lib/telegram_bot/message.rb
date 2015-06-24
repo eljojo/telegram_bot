@@ -5,6 +5,7 @@ module TelegramBot
     alias_method :id, :message_id
     alias_method :to_i, :id
     attribute :from, User
+    alias_method :user, :from
     attribute :text, String
     attribute :date, DateTime
     attribute :chat, Channel
