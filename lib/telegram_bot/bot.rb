@@ -18,7 +18,7 @@ module TelegramBot
       User.new(response.result)
     end
 
-    def get_updates(&block)
+    def get_updates(looping: true, &block)
       loop do
         response = request(:getUpdates, offset: @offset, timeout: @timeout)
         response.result.each do |raw_update|
@@ -26,6 +26,7 @@ module TelegramBot
           @offset = update.id + 1
           yield update.message
         end
+        break unless do_loop
       end
     end
 
