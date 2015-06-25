@@ -26,7 +26,7 @@ module TelegramBot
           @offset = update.id + 1
           yield update.message
         end
-        break unless do_loop
+        break unless looping
       end
     end
 
