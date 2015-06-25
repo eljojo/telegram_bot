@@ -3,12 +3,13 @@ module TelegramBot
     ENDPOINT = 'https://api.telegram.org/'
 
     attr_reader :me
+    attr_reader :offset
     alias_method :identity, :me
 
-    def initialize(token)
+    def initialize(token, offset: 0)
       @token = token
       @timeout = 50
-      @offset = 0
+      @offset = offset
       @connection = Excon.new(ENDPOINT, persistent: true)
       @me = get_me
     end
