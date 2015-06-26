@@ -1,9 +1,14 @@
 require 'telegram_bot'
 require 'pp'
+require 'logger'
+
+logger = Logger.new(STDOUT, Logger::DEBUG)
 
 bot = TelegramBot.new('YOUR KEY GOES HERE')
+logger.debug "starting telegram bot"
+
 bot.get_updates do |message|
-  puts "@#{message.from.username}: #{message.text}"
+  logger.info "@#{message.from.username}: #{message.text}"
   command = message.get_command_for(bot)
 
   message.reply do |reply|
@@ -13,7 +18,7 @@ bot.get_updates do |message|
     else
       reply.text = "#{message.from.first_name}, have no idea what #{command.inspect} means."
     end
-    puts "sending #{reply.text.inspect} to @#{message.from.username}"
+    logger.info "sending #{reply.text.inspect} to @#{message.from.username}"
     reply.send_with(bot)
   end
 end
