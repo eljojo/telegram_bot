@@ -5,7 +5,7 @@ A charismatic ruby client for [Telegram's Bot API](https://core.telegram.org/bot
 Write your own Telegram Bot using Ruby! Yay!
 
 Currently under heavy development.
-Contributions are always welcome.
+Please [collaborate](https://github.com/eljojo/telegram_bot/issues/new) with your questions, ideas or problems!
 
 ## Installation
 
