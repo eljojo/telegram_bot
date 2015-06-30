@@ -63,6 +63,53 @@ You can find more info [here](https://core.telegram.org/bots).
 
 ![How to get Token](http://i.imgur.com/90ya4Oe.png)
 
+## What else can it do?
+
+you can pass options to the bot initializer:
+```ruby
+bot = TelegramBot.new(token: 'abc', logger: Logger.new(STDOUT), offset: 123, timeout: 20)
+```
+
+if you don't want to start the loop, don't pass a block to ``#get_updates`` and you'll get an array with the latest messages:
+```ruby
+messages = bot.get_updates(timeout: 30, offset: 123)
+```
+
+Because things can go wrong sometimes with the API, there's a ``fail_silently`` option that you can pass to ``#get_updates`` like this:
+```ruby
+bot.get_updates(fail_silently: true) do |message|
+    puts message.text
+end
+```
+
+A message has several attributes:
+```ruby
+message = bot.get_updates.last
+
+# message data
+message.text # "hello moto"
+message.date # Wed, 01 Jul 2015 09:52:54 +0200 (DateTime)
+
+# reading user
+message.from # TelegramBot::User
+message.from.first_name # "Homer"
+message.from.last_name  # "Simpson"
+message.from.username   # "mr_x"
+
+# channel
+message.channel.id # 123123123 (telegram's id)
+
+# reply
+message.reply do |reply|
+    reply.text = "homer please clean the garage"
+    reply.send_with(bot)
+end
+# or
+reply = message.reply
+reply.text = "i'll do it after going to moe's"
+bot.send_message(reply)
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/eljojo/telegram_bot. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
