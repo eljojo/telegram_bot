@@ -26,8 +26,8 @@ Here's an example:
 ```ruby
 require 'telegram_bot'
 
-bot = TelegramBot.new('[YOUR TELEGRAM BOT TOKEN GOES HERE]')
-bot.get_updates do |message|
+bot = TelegramBot.new(token: '[YOUR TELEGRAM BOT TOKEN GOES HERE]')
+bot.get_updates(fail_silently: true) do |message|
   puts "@#{message.from.username}: #{message.text}"
   command = message.get_command_for(bot)
 
