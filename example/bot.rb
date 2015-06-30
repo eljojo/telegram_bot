@@ -4,10 +4,10 @@ require 'logger'
 
 logger = Logger.new(STDOUT, Logger::DEBUG)
 
-bot = TelegramBot.new('YOUR KEY GOES HERE')
+bot = TelegramBot.new(token: 'YOUR KEY GOES HERE', logger: logger)
 logger.debug "starting telegram bot"
 
-bot.get_updates do |message|
+bot.get_updates(fail_silently: true) do |message|
   logger.info "@#{message.from.username}: #{message.text}"
   command = message.get_command_for(bot)
 
