@@ -12,7 +12,7 @@ module TelegramBot
     attribute :reply_to_message, Message
 
     def reply(&block)
-      reply = OutMessage.new(chat_id: chat.id)
+      reply = OutMessage.new(chat: chat)
       yield reply if block_given?
       reply
     end
