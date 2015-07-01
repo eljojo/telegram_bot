@@ -12,7 +12,7 @@ Please [collaborate](https://github.com/eljojo/telegram_bot/issues/new) with you
 Add this line to your application's Gemfile (currently under development):
 
 ```ruby
-gem 'telegram_bot', github: 'eljojo/telegram_bot'
+gem 'telegram_bot'
 ```
 
 And then execute:
