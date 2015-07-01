@@ -55,9 +55,9 @@ module TelegramBot
 
     def get_last_updates(opts = {})
       response = request(:getUpdates, offset: opts[:offset] || @offset, timeout: opts[:timeout] || @timeout)
-      if opts[:fail_silently]
+      if opts[:fail_silently] && (!response.ok? || !response.result)
         logger.warn "error when getting updates. ignoring due to fail_silently."
-        return [] if !response.ok? || !response.result
+        return []
       end
       updates = response.result.map{|raw_update| Update.new(raw_update) }
       @offset = updates.last.id + 1 if updates.any?
