@@ -11,7 +11,7 @@ module TelegramBot
       @token = opts.fetch(:token)
       @timeout = opts[:timeout] || 50
       @offset = opts[:offset] || 0
-      @logger = opts[:logger] || NullLoger.new
+      @logger = opts[:logger] || NullLogger.new
       @connection = Excon.new(ENDPOINT, persistent: true)
     end
 

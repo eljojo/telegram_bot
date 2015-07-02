@@ -1,7 +1,7 @@
 require 'logger'
 
 module TelegramBot
-  class NullLoger < Logger
+  class NullLogger < Logger
     def initialize(*args)
     end
 

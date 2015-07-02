@@ -3,6 +3,7 @@ require 'virtus'
 require 'json'
 
 require "telegram_bot/version"
+require "telegram_bot/null_logger"
 require "telegram_bot/user"
 require "telegram_bot/group_chat"
 require "telegram_bot/channel"
