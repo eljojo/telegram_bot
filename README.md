@@ -78,7 +78,7 @@ messages = bot.get_updates(timeout: 30, offset: 123)
 Because things can go wrong sometimes with the API, there's a ``fail_silently`` option that you can pass to ``#get_updates`` like this:
 ```ruby
 bot.get_updates(fail_silently: true) do |message|
-    puts message.text
+  puts message.text
 end
 ```
 
@@ -101,8 +101,8 @@ message.channel.id # 123123123 (telegram's id)
 
 # reply
 message.reply do |reply|
-    reply.text = "homer please clean the garage"
-    reply.send_with(bot)
+  reply.text = "homer please clean the garage"
+  reply.send_with(bot)
 end
 # or
 reply = message.reply
