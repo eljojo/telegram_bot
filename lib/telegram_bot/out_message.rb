@@ -4,6 +4,8 @@ module TelegramBot
     attribute :chat, Channel
     attribute :text, String
     attribute :reply_to, Message
+    attribute :parse_mode, String
+    attribute :disable_web_page_preview, Boolean
 
     def send_with(bot)
       bot.send_message(self)
@@ -14,18 +16,16 @@ module TelegramBot
     end
 
     def to_h
-      if reply_to.nil? then
-        {
+      message = {
           text: text,
           chat_id: chat.id
-        }
-      else
-        {
-          text: text,
-          chat_id: chat.id,
-          reply_to_message_id: reply_to.id
-        }
-      end
+      }
+
+      message[:reply_to_message_id] = reply_to.id unless reply_to.nil?
+      message[:parse_mode] = parse_mode unless parse_mode.nil?
+      message[:disable_web_page_preview] = disable_web_page_preview unless disable_web_page_preview.nil?
+
+      message
     end
   end
 end
