@@ -12,7 +12,8 @@ module TelegramBot
       @timeout = opts[:timeout] || 50
       @offset = opts[:offset] || 0
       @logger = opts[:logger] || NullLogger.new
-      @connection = Excon.new(ENDPOINT, persistent: true)
+      @proxy = opts[:proxy] || nil
+      @connection = Excon.new(ENDPOINT, persistent: true, proxy: @proxy)
     end
 
     def get_me
