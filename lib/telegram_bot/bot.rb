@@ -31,7 +31,7 @@ module TelegramBot
       logger.info "starting get_updates loop"
       loop do
         messages = get_last_messages(opts)
-        messages.each do |message|
+        messages.compact.each do |message|
           logger.info "message from @#{message.chat.friendly_name}: #{message.text.inspect}"
           yield message
         end
