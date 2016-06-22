@@ -32,6 +32,7 @@ module TelegramBot
       loop do
         messages = get_last_messages(opts)
         messages.compact.each do |message|
+          next unless message
           logger.info "message from @#{message.chat.friendly_name}: #{message.text.inspect}"
           yield message
         end
