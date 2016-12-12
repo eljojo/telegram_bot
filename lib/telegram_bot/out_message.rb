@@ -6,6 +6,7 @@ module TelegramBot
     attribute :reply_to, Message
     attribute :parse_mode, String
     attribute :disable_web_page_preview, Boolean
+    attribute :reply_markup, Keyboard
 
     def send_with(bot)
       bot.send_message(self)
@@ -24,6 +25,7 @@ module TelegramBot
       message[:reply_to_message_id] = reply_to.id unless reply_to.nil?
       message[:parse_mode] = parse_mode unless parse_mode.nil?
       message[:disable_web_page_preview] = disable_web_page_preview unless disable_web_page_preview.nil?
+      message[:reply_markup] = reply_markup.to_h.to_json unless reply_markup.nil?
 
       message
     end
