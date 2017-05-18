@@ -1,6 +1,6 @@
 module TelegramBot
   class ApiResponse
-    attr_reader :body, :ok, :result, :description, :error_code
+    attr_reader :body, :ok, :result
 
     def initialize(res)
       @body = res.body
@@ -9,10 +9,9 @@ module TelegramBot
         @ok = data["ok"]
         @result = data["result"]
       else
-        data = JSON.parse(body)
         @ok = false
-        @description = data["description"]
-        @error_code = data["error_code"]
+        error = ResponseError.new(res)
+        fail error, "An error has occurred: #{error.data}", caller
       end
     end
 
