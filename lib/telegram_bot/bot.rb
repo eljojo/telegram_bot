@@ -45,6 +45,19 @@ module TelegramBot
       Message.new(response.result)
     end
 
+    def set_webhook(url, allowed_updates: %i(message))
+      logger.info "setting webhook url to #{url}, allowed_updates: #{allowed_updates}"
+      settings = {
+        url: url,
+        allowed_updates: allowed_updates.map(&:to_s),
+      }
+      request(:setWebhook, settings)
+    end
+
+    def remove_webhook
+      set_webhook("")
+    end
+
     private
     attr_reader :token
     attr_reader :logger
