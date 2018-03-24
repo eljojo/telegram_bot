@@ -40,8 +40,8 @@ module TelegramBot
     end
 
     def send_message(out_message)
-      response = request(:sendMessage, out_message.to_h)
       logger.info "sending message: #{out_message.text.inspect} to #{out_message.chat_friendly_name}"
+      response = request(:sendMessage, out_message.to_h)
       Message.new(response.result)
     end
 
