@@ -110,6 +110,25 @@ reply.text = "i'll do it after going to moe's"
 bot.send_message(reply)
 ```
 
+To send message to specific channel you could do following:
+
+```ruby
+bot = TelegramBot.new(token: '[YOUR TELEGRAM BOT TOKEN GOES HERE]')
+channel = TelegramBot::Channel.new(id: channel_id)
+message = TelegramBot::OutMessage.new
+message.chat = channel
+message.text = 'Some message'
+
+message.send_with(bot)
+
+```
+
+Also you may pass additional options described in [API Docs](https://core.telegram.org/bots/api#sendmessage)
+
+```ruby
+message.parse_mode = 'Markdown'
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/eljojo/telegram_bot. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](https://www.contributor-covenant.org/) code of conduct.

@@ -13,3 +13,6 @@
 *.a
 mkmf.log
 /.idea/
+*.iml
+*.ipr
+*.iws
