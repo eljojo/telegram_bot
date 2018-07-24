@@ -1,5 +1,5 @@
 module TelegramBot
-  class ResponseError < StandardError
+  class ApiResponseError < StandardError
     attr_reader :response
 
     def initialize(res)

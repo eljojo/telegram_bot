@@ -11,6 +11,7 @@
 *.so
 *.o
 *.a
+.rvmrc
 mkmf.log
 /.idea/
 *.iml
