@@ -14,8 +14,8 @@ require "telegram_bot/reply_keyboard_markup"
 require "telegram_bot/force_replay"
 require "telegram_bot/out_message"
 require "telegram_bot/update"
+require "telegram_bot/api_response_error"
 require "telegram_bot/api_response"
-require "telegram_bot/response_error"
 require "telegram_bot/bot"
 
 

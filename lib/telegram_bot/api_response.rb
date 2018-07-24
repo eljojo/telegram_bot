@@ -10,7 +10,7 @@ module TelegramBot
         @result = data["result"]
       else
         @ok = false
-        error = ResponseError.new(res)
+        error = ApiResponseError.new(res)
         fail error, "An error has occurred: #{error.data}", caller
       end
     end
