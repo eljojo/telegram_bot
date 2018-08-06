@@ -17,10 +17,19 @@ require "telegram_bot/out_message"
 require "telegram_bot/update"
 require "telegram_bot/api_response"
 require "telegram_bot/bot"
+require "telegram_bot/client"
 
 
 module TelegramBot
-  def self.new(*args)
-    Bot.new(*args)
+  def self.new(opts)
+    # compatibility with just passing a token
+    if opts.is_a?(String)
+      opts = { token: opts }
+    end
+
+    opts[:logger] ||= NullLogger.new
+    opts[:client] ||= Client.new(token: opts.fetch(:token), logger: opts[:logger], proxy: opts[:proxy])
+
+    Bot.new(opts)
   end
 end
