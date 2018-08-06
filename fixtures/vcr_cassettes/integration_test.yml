@@ -1,0 +1,120 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.telegram.org/botTEST_BOT_API_TOKEN/getUpdates?offset=0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.61.0
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - nginx/1.12.2
+      Date:
+      - Mon, 06 Aug 2018 22:25:44 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1518'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Expose-Headers:
+      - Content-Length,Content-Type,Date,Server,Connection
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {"ok":true,"result":[{"update_id":812401053,
+        "message":{"message_id":1,"from":{"id":5678,"is_bot":false,"first_name":"Jos\u00e9","last_name":"Albornoz","username":"bob_bobsen"},"chat":{"id":5678,"first_name":"Jos\u00e9","last_name":"Albornoz","username":"bob_bobsen","type":"private"},"date":1533592536,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}},{"update_id":812401054,
+        "message":{"message_id":3,"from":{"id":5678,"is_bot":false,"first_name":"Jos\u00e9","last_name":"Albornoz","username":"bob_bobsen","language_code":"en-CA"},"chat":{"id":5678,"first_name":"Jos\u00e9","last_name":"Albornoz","username":"bob_bobsen","type":"private"},"date":1533592614,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}},{"update_id":812401055,
+        "message":{"message_id":7,"from":{"id":5678,"is_bot":false,"first_name":"Jos\u00e9","last_name":"Albornoz","username":"bob_bobsen","language_code":"en-CA"},"chat":{"id":5678,"first_name":"Jos\u00e9","last_name":"Albornoz","username":"bob_bobsen","type":"private"},"date":1533592890,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}},{"update_id":812401056,
+        "message":{"message_id":9,"from":{"id":5678,"is_bot":false,"first_name":"Jos\u00e9","last_name":"Albornoz","username":"bob_bobsen","language_code":"en-CA"},"chat":{"id":5678,"first_name":"Jos\u00e9","last_name":"Albornoz","username":"bob_bobsen","type":"private"},"date":1533592955,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}]}
+    http_version: 
+  recorded_at: Mon, 06 Aug 2018 22:25:44 GMT
+- request:
+    method: post
+    uri: https://api.telegram.org/botTEST_BOT_API_TOKEN/sendMessage?chat_id=5678&text=Hello%2C+Jos%C3%A9%21
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.61.0
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - nginx/1.12.2
+      Date:
+      - Mon, 06 Aug 2018 22:25:44 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '291'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Expose-Headers:
+      - Content-Length,Content-Type,Date,Server,Connection
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"result":{"message_id":12,"from":{"id":1234,"is_bot":true,"first_name":"telegram-bot-gem-test","username":"gem_test_bot"},"chat":{"id":5678,"first_name":"Jos\u00e9","last_name":"Albornoz","username":"bob_bobsen","type":"private"},"date":1533594344,"text":"Hello,
+        Jos\u00e9!"}}'
+    http_version: 
+  recorded_at: Mon, 06 Aug 2018 22:25:44 GMT
+- request:
+    method: post
+    uri: https://api.telegram.org/botTEST_BOT_API_TOKEN/getMe
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.61.0
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - nginx/1.12.2
+      Date:
+      - Mon, 06 Aug 2018 22:25:44 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '114'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Expose-Headers:
+      - Content-Length,Content-Type,Date,Server,Connection
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"result":{"id":1234,"is_bot":true,"first_name":"telegram-bot-gem-test","username":"gem_test_bot"}}'
+    http_version: 
+  recorded_at: Mon, 06 Aug 2018 22:25:44 GMT
+recorded_with: VCR 4.0.0

@@ -1,0 +1,40 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.telegram.org/botTEST_BOT_API_TOKEN/getMe
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.61.0
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - nginx/1.12.2
+      Date:
+      - Mon, 06 Aug 2018 22:06:50 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '114'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Expose-Headers:
+      - Content-Length,Content-Type,Date,Server,Connection
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"result":{"id":1234,"is_bot":true,"first_name":"telegram-bot-gem-test","username":"gem_test_bot"}}'
+    http_version: 
+  recorded_at: Mon, 06 Aug 2018 22:06:50 GMT
+recorded_with: VCR 4.0.0
