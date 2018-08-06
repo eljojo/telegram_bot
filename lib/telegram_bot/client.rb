@@ -12,7 +12,7 @@ module TelegramBot
     def request(action, query = {})
       path = "/bot#{@token}/#{action}"
       res = @connection.post(path: path, query: query.to_h)
-      ApiResponse.new(res)
+      ApiResponse.from_excon(res)
     end
 
     private

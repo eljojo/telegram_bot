@@ -16,14 +16,14 @@ module TelegramBot
       end
     end
 
-    def initialize(res)
+    def self.from_excon(res)
       body = res.body
       if res.status == 200
         data = JSON.parse(body)
-        super(data["result"], nil)
+        new(data["result"], nil)
       else
         error = ResponseError.new(res)
-        super(nil, error)
+        new(nil, error)
       end
     end
   end
