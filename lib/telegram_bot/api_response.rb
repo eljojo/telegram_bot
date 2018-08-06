@@ -1,20 +1,30 @@
 module TelegramBot
-  class ApiResponse
-    attr_reader :body, :ok, :result
+  class ApiResponse < Result
+    class ResponseError < StandardError
+      attr_reader :response
 
-    def initialize(res)
-      @body = res.body
-      if res.status == 200
-        data = JSON.parse(body)
-        @ok = data["ok"]
-        @result = data["result"]
-      else
-        @ok = false
-        error = ResponseError.new(res)
-        fail error, "An error has occurred: #{error.data}", caller
+      def initialize(res)
+        @response = res
+      end
+
+      def data
+        @data ||= begin
+                    JSON.parse(response.body)
+                  rescue JSON::ParserError
+                    { error_code: response.status, error_message: response.reason_phrase }
+                  end
       end
     end
 
-    alias_method :ok?, :ok
+    def initialize(res)
+      body = res.body
+      if res.status == 200
+        data = JSON.parse(body)
+        super(data["result"], nil)
+      else
+        error = ResponseError.new(res)
+        super(nil, error)
+      end
+    end
   end
 end
