@@ -10,6 +10,7 @@ module TelegramBot
     attribute :date, DateTime
     attribute :chat, Channel
     attribute :reply_to_message, Message
+    attribute :location, Location
 
     def reply(&block)
       reply = OutMessage.new(chat: chat)

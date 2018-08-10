@@ -18,6 +18,7 @@ require "telegram_bot/update"
 require "telegram_bot/api_response"
 require "telegram_bot/bot"
 require "telegram_bot/client"
+require "telegram_bot/location"
 
 
 module TelegramBot
