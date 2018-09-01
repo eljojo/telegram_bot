@@ -8,6 +8,7 @@ require "telegram_bot/null_logger"
 require "telegram_bot/user"
 require "telegram_bot/group_chat"
 require "telegram_bot/channel"
+require "telegram_bot/location"
 require "telegram_bot/message"
 require "telegram_bot/keyboard"
 require "telegram_bot/reply_keyboard_hide"
@@ -18,7 +19,6 @@ require "telegram_bot/update"
 require "telegram_bot/api_response"
 require "telegram_bot/bot"
 require "telegram_bot/client"
-require "telegram_bot/location"
 
 
 module TelegramBot
