@@ -20,8 +20,10 @@ describe TelegramBot do
       bot = new_test_bot
       messages = bot.get_updates
       message = messages.first
+      entity = message.entities.first
 
       assert_equal "/start", message.text
+      assert_equal "/start", message.get_bot_command
 
       answer = message.reply do |reply|
         reply.text = "Hello, #{message.from.first_name}!"
@@ -31,8 +33,12 @@ describe TelegramBot do
         assert_equal result.text, reply.text
       end
 
+      assert !message.from.is_bot?
+      assert_includes ["enCA", nil], message.from.language_code
       assert_equal message.from.id, answer.chat.id
       assert_equal "Hello, José!", answer.text
+      
+      assert entity.is_bot_command?
     end
   end
 end
