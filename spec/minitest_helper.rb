@@ -20,7 +20,8 @@ module TestHelper
     TelegramBot::User.new(
       id: ENV['TEST_BOT_ID'],
       first_name: "telegram-bot-gem-test",
-      username: "gem_test_bot"
+      username: "gem_test_bot",
+      is_bot: true
     )
   end
 end
