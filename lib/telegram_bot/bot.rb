@@ -17,18 +17,24 @@ module TelegramBot
   end
 
   class Bot
+    ENDPOINT = 'https://api.telegram.org/'
+    attr_reader :connection
+
     def initialize(opts = {})
+      # compatibility with just passing a token
+      opts = {token: opts} if opts.is_a?(String)
+
+      @token = opts.fetch(:token)
+      @base_path = "/bot#{@token}"
       @offset = opts[:offset] || 0
-      @logger = opts.fetch(:logger)
-      @client = opts.fetch(:client)
+      @logger = opts[:logger] || NullLogger.new
+      @connection = Connection.new(ENDPOINT, persistent: true, proxy: opts[:proxy])
     end
 
     def get_me
-      @me ||= @client
-        .request(:getMe)
-        .and_then do |result|
-          User.new(result)
-        end
+      @me ||= @connection
+        .get(path: "#{@base_path}/getMe")
+        .and_then { |result| User.new(result) }
         .value!
     end
     alias_method :me, :get_me
@@ -51,18 +57,18 @@ module TelegramBot
 
     def send_message(out_message)
       logger.info "sending message: #{out_message.text.inspect} to #{out_message.chat_friendly_name}"
-      @client
-        .request(:sendMessage, out_message)
-        .and_then do |result|
-          Message.new(result)
-        end
+      path = "#{@base_path}/sendMessage"
+      @connection
+        .post(path: path, query: out_message.to_h)
+        .and_then { |result| Message.new(result) }
         .value!
     end
 
     def set_webhook(url, allowed_updates: %i(message))
       logger.info "setting webhook url to #{url}, allowed_updates: #{allowed_updates}"
-      request = WebhookRequest.new(url: url, allowed_updates: allowed_updates)
-      @client.request(:setWebhook, request)
+      webhook_request = WebhookRequest.new(url: url, allowed_updates: allowed_updates)
+      path = "#{@base_path}/setWebhook"
+      @connection.post(path: path, query: webhook_request.to_h)
     end
 
     def remove_webhook
@@ -74,8 +80,9 @@ module TelegramBot
 
     def get_last_updates(opts = {})
       opts[:offset] ||= @offset
-      request = UpdatesRequest.new(opts)
-      response = @client.request(:getUpdates, request)
+      updates_request = UpdatesRequest.new(opts)
+      path = "#{@base_path}/getUpdates"
+      response = @connection.get(path: path, query: updates_request.to_h)
       if opts[:fail_silently] && !response.ok?
         logger.warn "error when getting updates. ignoring due to fail_silently."
         return []
