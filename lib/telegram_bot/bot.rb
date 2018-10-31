@@ -86,7 +86,7 @@ module TelegramBot
     end
 
     def get_last_messages(opts = {})
-      get_last_updates(opts).map(&:message)
+      get_last_updates(opts).map(&:get_message)
     end
   end
 end
