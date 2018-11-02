@@ -47,6 +47,7 @@ module TelegramBot
       logger.info "starting get_updates loop"
       loop do
         messages = get_last_messages(opts)
+        opts[:offset] = @offset
         messages.compact.each do |message|
           next unless message
           logger.info "message from @#{message.chat.friendly_name}: #{message.text.inspect}"
@@ -87,7 +88,7 @@ module TelegramBot
         logger.warn "error when getting updates. ignoring due to fail_silently."
         return []
       end
-      updates = response.value!.compact.map{|raw_update| Update.new(raw_update) }
+      updates = response.value!.compact.map { |raw_update| Update.new(raw_update) }
       @offset = updates.last.id + 1 if updates.any?
       updates
     end
