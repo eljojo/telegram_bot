@@ -39,20 +39,28 @@ module TelegramBot
       reply
     end
 
+    def all_entities
+      (entities || []) + (caption_entities || [])
+    end
+
     MessageEntity::TYPES_ENTITY.each do |method_name|
-      singular_name_of_method = "get_#{method_name}"
-      is_type_method = "is_#{method_name}?".to_sym
+      class_eval <<-DEF, __FILE__, __LINE__ + 1
+        def get_#{method_name}s(return_entities=false)
+          return [] unless all_entities.any?
+          list_entities = all_entities.select(&:is_#{method_name}?)
+          return list_entities if return_entities
+          list_entities.map { |entity| entity.get_#{method_name}(self) }
+        end
+      DEF
 
-      define_method("#{singular_name_of_method}s") do
-        return [] if entities.nil?
-        entities.select(&is_type_method).map { |entity| text[entity.offset..-1] }
-      end
-
-      define_method(singular_name_of_method) do
-        return nil if entities.nil?
-        entity = entities.find(&is_type_method)
-        text[entity.offset..-1] unless entity.nil?
-      end
+      class_eval <<-DEF, __FILE__, __LINE__ + 1
+        def get_#{method_name}(return_entity=false)
+          return nil unless all_entities.any?
+          entity = all_entities.find(&:is_#{method_name}?)
+          return entity if return_entity
+          entity.get_#{method_name}(self) if entity
+        end
+      DEF
     end
   end
 end

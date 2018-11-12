@@ -11,9 +11,9 @@ module TelegramBot
       ApiResponse.from_excon(response)
     end
 
-    Excon::HTTP_VERBS.each do |method|
-      define_method(method) do |params = {}, &block|
-        request(params.merge(method: method), &block)
+    Excon::HTTP_VERBS.each do |method_name|
+      define_method(method_name) do |params = {}, &block|
+        request(params.merge(method: method_name), &block)
       end
     end
   end
