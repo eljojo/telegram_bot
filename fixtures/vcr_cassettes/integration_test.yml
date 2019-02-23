@@ -44,10 +44,10 @@ http_interactions:
   recorded_at: Mon, 06 Aug 2018 22:25:44 GMT
 - request:
     method: post
-    uri: https://api.telegram.org/botTEST_BOT_API_TOKEN/sendMessage?chat_id=5678&text=Hello%2C+Jos%C3%A9%21
+    uri: https://api.telegram.org/botTEST_BOT_API_TOKEN/sendMessage
     body:
       encoding: US-ASCII
-      string: ''
+      string: 'chat_id=5678&text=Hello%2C+Jos%C3%A9%21'
     headers:
       User-Agent:
       - excon/0.61.0
