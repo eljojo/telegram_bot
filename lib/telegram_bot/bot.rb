@@ -60,7 +60,7 @@ module TelegramBot
       logger.info "sending message: #{out_message.text.inspect} to #{out_message.chat_friendly_name}"
       path = "#{@base_path}/sendMessage"
       @connection
-        .post(path: path, query: out_message.to_h)
+        .post(path: path, body: URI.encode_www_form(out_message.to_h))
         .and_then { |result| Message.new(result) }
         .value!
     end
@@ -69,7 +69,7 @@ module TelegramBot
       logger.info "setting webhook url to #{url}, allowed_updates: #{allowed_updates}"
       webhook_request = WebhookRequest.new(url: url, allowed_updates: allowed_updates)
       path = "#{@base_path}/setWebhook"
-      @connection.post(path: path, query: webhook_request.to_h)
+      @connection.post(path: path, body: URI.encode_www_form(webhook_request.to_h))
     end
 
     def remove_webhook
