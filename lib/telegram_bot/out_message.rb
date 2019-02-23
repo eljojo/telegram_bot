@@ -1,7 +1,7 @@
 module TelegramBot
   class OutMessage
     include Virtus.model
-    attribute :chat, Channel
+    attribute :chat, Chat
     attribute :text, String
     attribute :reply_to, Message
     attribute :parse_mode, String

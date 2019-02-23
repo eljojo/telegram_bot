@@ -7,9 +7,9 @@ module TelegramBot
     attribute :from, User
     alias_method :user, :from
     attribute :date, DateTime
-    attribute :chat, Channel
+    attribute :chat, Chat
     attribute :forward_from, User
-    attribute :forward_from_chat, Channel
+    attribute :forward_from_chat, Chat
     attribute :forward_from_message_id, Integer
     attribute :forward_signature, String
     attribute :forward_date, DateTime

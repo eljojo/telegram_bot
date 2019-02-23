@@ -96,8 +96,8 @@ message.from.first_name # "Homer"
 message.from.last_name  # "Simpson"
 message.from.username   # "mr_x"
 
-# channel
-message.channel.id # 123123123 (telegram's id)
+# chat
+message.chat.id # 123123123 (telegram's id)
 
 # reply
 message.reply do |reply|
@@ -110,13 +110,13 @@ reply.text = "i'll do it after going to moe's"
 bot.send_message(reply)
 ```
 
-To send message to specific channel you could do following:
+To send message to specific chat you could do following:
 
 ```ruby
 bot = TelegramBot.new(token: '[YOUR TELEGRAM BOT TOKEN GOES HERE]')
-channel = TelegramBot::Channel.new(id: channel_id)
+chat = TelegramBot::Chat.new(id: chat_id)
 message = TelegramBot::OutMessage.new
-message.chat = channel
+message.chat = chat
 message.text = 'Some message'
 
 message.send_with(bot)
