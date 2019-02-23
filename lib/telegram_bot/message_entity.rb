@@ -31,9 +31,19 @@ module TelegramBot
     end
 
     TYPES_ENTITY.each do |method_name|
-      define_method("is_#{method_name}?") do
-        is_type?(method_name)
-      end
+      class_eval <<-DEF, __FILE__, __LINE__ + 1
+        def is_#{method_name}?
+          is_type?("#{method_name}")
+        end
+      DEF
+
+      class_eval <<-DEF, __FILE__, __LINE__ + 1
+        def get_#{method_name}(message, only_#{method_name}: false)
+          limit = -1
+          limit += offset + length if only_#{method_name}
+          message.text[offset..limit] if is_#{method_name}?
+        end
+      DEF
     end
   end
 end
