@@ -15,7 +15,7 @@ module TelegramBot
     PRE = "pre"
     TEXT_LINK = "text_link"
     TEXT_MENTION = "text_mention"
-    TYPES_ENTITY = [
+    ENTITY_TYPES = [
       MENTION, HASHTAG, CASHTAG, BOT_COMMAND, URL, EMAIL,
       PHONE_NUMBER, BOLD, ITALIC, CODE, PRE, TEXT_LINK, TEXT_MENTION
     ]
@@ -30,7 +30,7 @@ module TelegramBot
       type == type_entity
     end
 
-    TYPES_ENTITY.each do |method_name|
+    ENTITY_TYPES.each do |method_name|
       class_eval <<-DEF, __FILE__, __LINE__ + 1
         def is_#{method_name}?
           is_type?("#{method_name}")

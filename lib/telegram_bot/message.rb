@@ -43,7 +43,7 @@ module TelegramBot
       (entities || []) + (caption_entities || [])
     end
 
-    MessageEntity::TYPES_ENTITY.each do |method_name|
+    MessageEntity::ENTITY_TYPES.each do |method_name|
       class_eval <<-DEF, __FILE__, __LINE__ + 1
         def get_#{method_name}s(return_entities=false)
           return [] unless all_entities.any?
