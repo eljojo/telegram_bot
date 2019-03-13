@@ -45,20 +45,20 @@ module TelegramBot
 
     MessageEntity::ENTITY_TYPES.each do |method_name|
       class_eval <<-DEF, __FILE__, __LINE__ + 1
-        def get_#{method_name}s(return_entities=false)
+        def get_#{method_name}s(return_entities: false, only_#{method_name}: false)
           return [] unless all_entities.any?
           list_entities = all_entities.select(&:is_#{method_name}?)
           return list_entities if return_entities
-          list_entities.map { |entity| entity.get_#{method_name}(self) }
+          list_entities.map { |entity| entity.get_#{method_name}(self, only_#{method_name}: only_#{method_name}) }
         end
       DEF
 
       class_eval <<-DEF, __FILE__, __LINE__ + 1
-        def get_#{method_name}(return_entity=false)
+        def get_#{method_name}(return_entity: false, only_#{method_name}: false)
           return nil unless all_entities.any?
           entity = all_entities.find(&:is_#{method_name}?)
-          return entity if return_entity
-          entity.get_#{method_name}(self) if entity
+          return entity if return_entity || entity.nil?
+          entity.get_#{method_name}(self, only_#{method_name}: only_#{method_name})
         end
       DEF
     end

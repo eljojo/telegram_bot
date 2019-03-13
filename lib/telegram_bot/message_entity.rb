@@ -39,9 +39,10 @@ module TelegramBot
 
       class_eval <<-DEF, __FILE__, __LINE__ + 1
         def get_#{method_name}(message, only_#{method_name}: false)
+          return nil unless is_#{method_name}?
           limit = -1
           limit += offset + length if only_#{method_name}
-          message.text[offset..limit] if is_#{method_name}?
+          message.text[offset..limit]
         end
       DEF
     end
