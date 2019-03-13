@@ -34,12 +34,12 @@ bot.get_updates(fail_silently: true) do |message|
   message.reply do |reply|
     case msg_text
     when /greet/i
-      reply.text = "Hello, #{message.from.first_name}!"
+      reply[:text] = "Hello, #{message.from.first_name}!"
     else
-      reply.text = "#{message.from.first_name}, have no idea what #{msg_text.inspect} means."
+      reply[:text] = "#{message.from.first_name}, have no idea what #{msg_text.inspect} means."
     end
-    puts "sending #{reply.text.inspect} to @#{message.from.username}"
-    reply.send_with(bot)
+    puts "sending #{reply[:text].inspect} to @#{message.from.username}"
+    bot.send_message(**reply)
   end
 end
 ```
@@ -101,32 +101,28 @@ message.chat.id # 123123123 (telegram's id)
 
 # reply
 message.reply do |reply|
-  reply.text = "homer please clean the garage"
-  reply.send_with(bot)
+  reply[:text] = "homer please clean the garage"
+  bot.send_message(**reply)
 end
 # or
 reply = message.reply
-reply.text = "i'll do it after going to moe's"
-bot.send_message(reply)
+reply[:text] = "i'll do it after going to moe's"
+bot.send_message(**reply)
 ```
 
 To send message to specific chat you could do following:
 
 ```ruby
 bot = TelegramBot.new(token: '[YOUR TELEGRAM BOT TOKEN GOES HERE]')
-chat = TelegramBot::Chat.new(id: chat_id)
-message = TelegramBot::OutMessage.new
-message.chat = chat
-message.text = 'Some message'
-
-message.send_with(bot)
+message = {chat_id: chat_id, text: 'Some message'}
+bot.send_message(**message)
 
 ```
 
 Also you may pass additional options described in [API Docs](https://core.telegram.org/bots/api#sendmessage)
 
 ```ruby
-message.parse_mode = 'Markdown'
+message[:parse_mode] = 'Markdown'
 ```
 
 ## Contributing

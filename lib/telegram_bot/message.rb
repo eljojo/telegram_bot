@@ -33,8 +33,8 @@ module TelegramBot
     attribute :pinned_message, Message
     attribute :connected_website, String
 
-    def reply(&block)
-      reply = OutMessage.new(chat: chat)
+    def reply
+      reply = {chat_id: chat.id, reply_to_message_id: message_id}
       yield reply if block_given?
       reply
     end

@@ -15,7 +15,6 @@ module TelegramBot
     ReplyKeyboardHide: "reply_keyboard_hide",
     ReplyKeyboardMarkup: "reply_keyboard_markup",
     ForceReplay: "force_replay",
-    OutMessage: "out_message",
     Update: "update",
     ApiResponse: "api_response",
     Bot: "bot",

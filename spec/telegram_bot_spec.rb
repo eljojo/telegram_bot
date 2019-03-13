@@ -26,17 +26,17 @@ describe TelegramBot do
       assert_equal "/start", message.get_bot_command
 
       answer = message.reply do |reply|
-        reply.text = "Hello, #{message.from.first_name}!"
-        result = reply.send_with(bot)
+        reply[:text] = "Hello, #{message.from.first_name}!"
+        result = bot.send_message(**reply)
 
         assert_equal bot.get_me.id, result.from.id
-        assert_equal result.text, reply.text
+        assert_equal result.text, reply[:text]
       end
 
       assert !message.from.is_bot?
       assert_includes ["enCA", nil], message.from.language_code
-      assert_equal message.from.id, answer.chat.id
-      assert_equal "Hello, José!", answer.text
+      assert_equal message.from.id, answer[:chat_id]
+      assert_equal "Hello, José!", answer[:text]
       
       assert entity.is_bot_command?
     end

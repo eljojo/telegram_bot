@@ -56,20 +56,27 @@ module TelegramBot
       end
     end
 
-    def send_message(out_message)
-      logger.info "sending message: #{out_message.text.inspect} to #{out_message.chat_friendly_name}"
-      path = "#{@base_path}/sendMessage"
-      @connection
-        .post(path: path, body: URI.encode_www_form(out_message.to_h))
-        .and_then { |result| Message.new(result) }
-        .value!
+    # send_message(text:, chat_id:, parse_mode: nil, disable_web_page_preview: nil, **kwargs)
+    def send_message(*args, **kwargs)
+      text = kwargs.fetch(:text) { args.fetch(0) }
+      chat_id = kwargs.fetch(:chat_id) { args.fetch(1) }
+      parse_mode = kwargs.fetch(:parse_mode) { args[2] }
+      disable_web_page_preview = kwargs.fetch(:disable_web_page_preview) { args[3] }
+
+      logger.info "sending message: #{text.inspect}"
+      data = {text: text, chat_id: chat_id}
+      data[:parse_mode] = parse_mode unless parse_mode.nil?
+      data[:disable_web_page_preview] = disable_web_page_preview unless disable_web_page_preview.nil?
+
+      args.shift(4)
+      args.unshift("#{@base_path}/sendMessage", data)
+      Message.new(post_message(*args, **kwargs))
     end
 
     def set_webhook(url, allowed_updates: %i(message))
       logger.info "setting webhook url to #{url}, allowed_updates: #{allowed_updates}"
       webhook_request = WebhookRequest.new(url: url, allowed_updates: allowed_updates)
-      path = "#{@base_path}/setWebhook"
-      @connection.post(path: path, body: URI.encode_www_form(webhook_request.to_h))
+      post_message(path: "#{@base_path}/setWebhook", data: webhook_request.to_h)
     end
 
     def remove_webhook
@@ -77,24 +84,49 @@ module TelegramBot
     end
 
     private
-    attr_reader :logger
+      attr_reader :logger
 
-    def get_last_updates(opts = {})
-      opts[:offset] ||= @offset
-      updates_request = UpdatesRequest.new(opts)
-      path = "#{@base_path}/getUpdates"
-      response = @connection.get(path: path, query: updates_request.to_h)
-      if opts[:fail_silently] && !response.ok?
-        logger.warn "error when getting updates. ignoring due to fail_silently."
-        return []
+      def get_last_updates(opts = {})
+        opts[:offset] ||= @offset
+        updates_request = UpdatesRequest.new(opts)
+        path = "#{@base_path}/getUpdates"
+        response = @connection.get(path: path, query: updates_request.to_h)
+        if opts[:fail_silently] && !response.ok?
+          logger.warn "error when getting updates. ignoring due to fail_silently."
+          return []
+        end
+        updates = response.value!.compact.map { |raw_update| Update.new(raw_update) }
+        @offset = updates.last.id + 1 if updates.any?
+        updates
       end
-      updates = response.value!.compact.map { |raw_update| Update.new(raw_update) }
-      @offset = updates.last.id + 1 if updates.any?
-      updates
-    end
 
-    def get_last_messages(opts = {})
-      get_last_updates(opts).map(&:get_message)
-    end
+      def get_last_messages(opts = {})
+        get_last_updates(opts).map(&:get_message)
+      end
+
+      # post_message(path:, data: {}, disable_notification: nil, reply_to_message_id: nil, content_type: nil)
+      def post_message(*args, **kwargs)
+        path = kwargs.fetch(:path) { args.fetch(0) }
+        data = kwargs.fetch(:data) { args.fetch(1, {}) }
+        disable_notification = kwargs.fetch(:disable_notification) { args[2] }
+        reply_to_message_id = kwargs.fetch(:reply_to_message_id) { args[3] }
+        content_type = kwargs.fetch(:content_type) { args[4] }
+
+        data[:disable_notification] = disable_notification unless disable_notification.nil?
+        data[:reply_to_message_id] = reply_to_message_id unless reply_to_message_id.nil?
+
+        if content_type.nil?
+          content_type = "application/x-www-form-urlencoded"
+          data = URI.encode_www_form(data)
+        else
+          content_type = content_type.downcase
+        end
+
+        if content_type == "application/json"
+          data = JSON.dump(data)
+        end
+
+        @connection.post(path: path, body: data, headers: {"Content-Type" => content_type}).value!
+      end
   end
 end
