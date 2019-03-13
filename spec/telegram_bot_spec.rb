@@ -24,6 +24,8 @@ describe TelegramBot do
 
       assert_equal "/start", message.text
       assert_equal "/start", message.get_bot_command
+      assert_equal true, message.chat.is_private?
+      assert_equal false, message.chat.is_group?
 
       answer = message.reply do |reply|
         reply[:text] = "Hello, #{message.from.first_name}!"

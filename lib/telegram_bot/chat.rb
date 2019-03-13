@@ -1,6 +1,13 @@
 module TelegramBot
   class Chat
     include Virtus.model
+
+    PRIVATE = "private"
+    GROUP = "group"
+    SUPERGROUP = "supergroup"
+    CHANNEL = "channel"
+    CHAT_TYPES = [PRIVATE, GROUP, SUPERGROUP, CHANNEL]
+
     attribute :id, Integer
     attribute :type, String
     attribute :title, String
@@ -16,6 +23,18 @@ module TelegramBot
 
     def friendly_name
       username ? "@#{username}" : "chat #{title.inspect}"
+    end
+
+    def is_type?(chat_type)
+      type == chat_type
+    end
+
+    CHAT_TYPES.each do |chat_type|
+      class_eval <<-DEF, __FILE__, __LINE__ + 1
+        def is_#{chat_type}?
+          is_type?("#{chat_type}")
+        end
+      DEF
     end
   end
 end
