@@ -36,5 +36,13 @@ module TelegramBot
         end
       DEF
     end
+
+    # send_message(bot:, text:, parse_mode: nil, disable_web_page_preview: nil, **kwargs)
+    def send_message(*args, **kwargs)
+      bot = kwargs.fetch(:bot) { args.fetch(0) }
+      args[0] = id
+      kwargs[:chat_id] = id
+      bot.send_message(*args, **kwargs)
+    end
   end
 end

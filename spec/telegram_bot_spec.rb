@@ -31,7 +31,7 @@ describe TelegramBot do
 
       answer = message.reply do |reply|
         reply[:text] = "Hello, #{message.from.first_name}!"
-        result = bot.send_message(**reply)
+        result = message.chat.send_message(bot, **reply)
 
         assert_equal bot.get_me.id, result.from.id
         assert_equal result.text, reply[:text]

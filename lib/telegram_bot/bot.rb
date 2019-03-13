@@ -56,10 +56,10 @@ module TelegramBot
       end
     end
 
-    # send_message(text:, chat_id:, parse_mode: nil, disable_web_page_preview: nil, **kwargs)
+    # send_message(chat_id:, text:, parse_mode: nil, disable_web_page_preview: nil, **kwargs)
     def send_message(*args, **kwargs)
-      text = kwargs.fetch(:text) { args.fetch(0) }
-      chat_id = kwargs.fetch(:chat_id) { args.fetch(1) }
+      chat_id = kwargs.fetch(:chat_id) { args.fetch(0) }
+      text = kwargs.fetch(:text) { args.fetch(1) }
       parse_mode = kwargs.fetch(:parse_mode) { args[2] }
       disable_web_page_preview = kwargs.fetch(:disable_web_page_preview) { args[3] }
 
