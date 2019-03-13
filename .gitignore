@@ -16,3 +16,7 @@ mkmf.log
 *.iml
 *.ipr
 *.iws
+.ruby-version
+.ruby-gemset
+.rvmrc
+.versions.conf

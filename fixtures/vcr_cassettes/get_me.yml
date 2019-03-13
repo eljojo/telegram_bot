@@ -1,7 +1,7 @@
 ---
 http_interactions:
 - request:
-    method: post
+    method: get
     uri: https://api.telegram.org/botTEST_BOT_API_TOKEN/getMe
     body:
       encoding: US-ASCII
