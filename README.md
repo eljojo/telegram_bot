@@ -1,3 +1,10 @@
+# This gem has been archived
+
+Hi everyone, I haven't touched this code in a long time and I decided it may be best to archive the repo and put it to rest.  
+I hope this project helped many people get started in bot development, I had fun working on it.
+
+I would recommend using https://github.com/atipugin/telegram-bot-ruby.
+
 # TelegramBot
 
 A charismatic ruby client for [Telegram's Bot API](https://core.telegram.org/bots).
